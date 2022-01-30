@@ -34,7 +34,8 @@ class ResultsViewController: UIViewController {
     // MARK: UI
     private func updateUI() {
         self.filesizeLabel.text = "Total files size: \(self.viewModel.bytesLoaded) bytes"
-        self.durationTimeLabel.text = "Duration: \(self.viewModel.duration) seconds"
+        let durationFormated = String(format: "%.3f", self.viewModel.duration)
+        self.durationTimeLabel.text = "Duration: \(durationFormated) seconds"
     }
     // MARK: User actions
     @IBAction func onDoneAction(_ sender: Any) {
