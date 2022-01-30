@@ -8,12 +8,38 @@
 import UIKit
 
 class ResultsViewController: UIViewController {
-
+    // MARK: Outlets
+    @IBOutlet weak var filesizeLabel: UILabel!
+    @IBOutlet weak var durationTimeLabel: UILabel!
+    
+    // MARK: Properties
+    private let viewModel: ResultsViewModel
+    
+    // MARK: - Life cycle
+    init?(coder: NSCoder, viewModel: ResultsViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.updateUI()
     }
 
-
+    // MARK: UI
+    private func updateUI() {
+        self.filesizeLabel.text = "Total files size: \(self.viewModel.bytesLoaded) bytes"
+        self.durationTimeLabel.text = "Duration: \(self.viewModel.duration) seconds"
+    }
+    // MARK: User actions
+    @IBAction func onDoneAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
