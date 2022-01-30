@@ -1,3 +1,3 @@
 # Interestingness
 
-ND: Add you Flickr API key to NetworkAPI.apiKey 
+ND: Add you Flickr API key to NetworkAPI.apiKey in Utils/Helpres.swift file
