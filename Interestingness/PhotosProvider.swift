@@ -53,8 +53,8 @@ class PhotosProvider {
             let startTime = Date()
             var isCanceled = false
             
-            dispatchGroup.enter()
             guard let requestURL = URL(string: NetworkAPI.interestingPhotosURLString()) else { return }
+            dispatchGroup.enter()
             
             // 1. Get list of available images info
             self.urlSession.dataTask(with: requestURL) { [weak self] data, response, error in
@@ -73,12 +73,14 @@ class PhotosProvider {
                         self.delegate?.didRecieveTotalPhotosInfo(numberOfPhotos: photos.count)
                         // 2. Enumerate through images info list and request image data for each
                         for var photoInfo in photos {
+                            // if error occured - interapt queueing new tasks to URLSession
+                            if isCanceled { break }
                             
-                            dispatchGroup.enter()
                             let urlString = photoInfo.photoURLString()
                             guard let photoRequestURL = URL(string: urlString) else { return }
                             // Default URLSessionConfiguration holds up to 6 connection to host at a time
                             // URLSession will load images upto 6 images simultaniusly
+                            dispatchGroup.enter()
                             self.urlSession.dataTask(with: photoRequestURL) { [weak self] data, response, error in
                                 
                                 defer { dispatchGroup.leave() }
